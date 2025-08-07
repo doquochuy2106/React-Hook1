@@ -1,6 +1,6 @@
-import react from "react";
+import React from "react";
 
-class UserInfor extends react.Component {
+class UserInfor extends React.Component {
     state = {
         name: 'Quốc Huy',
         address: 'HCM',
@@ -27,7 +27,9 @@ class UserInfor extends react.Component {
         event.preventDefault()
         console.log(this.state)
     }
+
     render() {
+
         return (
             <div>My name is {this.state.name} and i'm  {this.state.age}
                 <form onSubmit={(event) => { this.handleOnSubmit(event) }}>

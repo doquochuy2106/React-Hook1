@@ -1,16 +1,23 @@
-import react from "react";
+import React from "react";
 
-class Displayinfor extends react.Component {
+class Displayinfor extends React.Component {
     render() {
         //destructuring array/object
-        const { name, age } = this.props
-        console.log(this.props)
+        const { listUsers } = this.props;
         return (
             <div>
-                <div>My name's a {name}</div>
-                <div>My age's a {age}</div>
+                {listUsers.map((user, index) => {
+                    return (
+                        <div key={user.id}>
+                            <div>My name's a {user.name} </div>
+                            <div>My age's a {user.age} </div>
+                            <hr />
+                        </div>
+                    )
+                })}
             </div>
         )
     }
 }
-export default Displayinfor
+
+export default Displayinfor;
