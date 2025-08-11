@@ -16,7 +16,7 @@ class Displayinfor extends React.Component {
     render() {
         //destructuring array/object
         const { listUsers } = this.props;
-        console.log(listUsers)
+
         return (
             <div>
                 <div>
