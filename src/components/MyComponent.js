@@ -21,7 +21,6 @@ class MyComponent extends React.Component {
 
     //jsx
     render() {
-
         return (
             <>
                 <div className="a">
