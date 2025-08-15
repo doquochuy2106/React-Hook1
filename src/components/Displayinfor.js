@@ -3,11 +3,32 @@ import "./Displayinfor.scss"
 import logo from "../logo.svg"
 
 class Displayinfor extends React.Component {
-
-    state = {
-        isShowListUser: true
+    constructor(props) {
+        console.log(">>> call constructor: 1")
+        super(props)
+        //babel compier
+        this.state = {
+            isShowListUser: true
+        }
     }
 
+
+
+    componentDidMount() {
+        console.log(">>> call me component did mount")
+        setTimeout(() => {
+            document.title = 'doquochuy'
+        }, 3000)
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log(">>> call me component did update", this.props, prevProps)
+        if (this.props.listUsers !== prevProps.listUsers) {
+            if (this.props.listUsers === 5) {
+                alert("you got 5 users")
+            }
+        }
+    }
 
     handleshowhide = () => {
         this.setState({
@@ -16,6 +37,7 @@ class Displayinfor extends React.Component {
     }
 
     render() {
+        console.log(">>> call me render:")
         //destructuring array/object
         const { listUsers } = this.props;
 
