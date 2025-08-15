@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Displayinfor.scss"
 import logo from "../logo.svg"
 
@@ -40,9 +40,21 @@ import logo from "../logo.svg"
 
 const Displayinfor = (props) => {
     const { listUsers } = props;
+
+    const [isShowHideListUser, setShowHideListUser] = useState(true)
+
+    const handleshowHide = () => {
+        setShowHideListUser(!isShowHideListUser)
+    }
+
     return (
         <div className="display-infor-container">
-            {true &&
+            <div>
+                <span onClick={() => handleshowHide()}>
+                    {isShowHideListUser == true ? "Hide list user" : "Show list user"}
+                </span>
+            </div>
+            {isShowHideListUser &&
                 <>
                     {listUsers.map((user, index) => {
                         return (
