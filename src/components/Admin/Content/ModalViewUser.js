@@ -49,40 +49,6 @@ const ModalViewUser = (props) => {
         }
     }
 
-    // const validateEmail = (email) => {
-    //     return String(email)
-    //         .toLowerCase()
-    //         .match(
-    //             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    //         );
-    // };
-
-    // const handSubmitCreateUser = async () => {
-    //     //validate
-    //     const isValidEmail = validateEmail(email)
-    //     if (!isValidEmail) {
-    //         toast.error("Invalid email")
-    //         return
-    //     }
-
-
-    //     let data = await putUpdateUsers(dataUpdate.id, username, role, image)
-
-
-    //     if (data && data.EC === 0) {
-    //         toast.success(data.EM)
-    //         handleClose()
-    //         props.fetchListUser()
-    //     }
-
-    //     if (data && data.EC != 0) {
-    //         toast.error(data.EM)
-    //     }
-
-    // }
-
-    // console.log("check dataupdate: ", props.dataUpdate)
-
     return (
         <>
             {/* <Button variant="primary" onClick={handleShow}>
