@@ -30,6 +30,7 @@ instance.interceptors.response.use(function (response) {
     //Do something with response data
     return response && response.data ? response.data : response;
 }, function (error) {
+    NProgress.done();
     //Any status code that lie within the range of 2xx cause this function to trigger
     //Do something with response data
     return error && error.response && error.response.data ? error.response.data : Promise.reject(error);
