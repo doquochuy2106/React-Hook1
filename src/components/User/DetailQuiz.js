@@ -1,10 +1,13 @@
-import { useParams } from "react-router-dom"
+import { useParams, useLocation } from "react-router-dom"
 import { getQuestionById } from "../../services/apiServices"
 import { useEffect } from "react"
 import _ from "lodash"
+import "./DetailQuiz.scss"
 
 const DetailQuiz = (props) => {
     const params = useParams()
+    const location = useLocation()
+    console.log(location)
     let quizId = params.id
 
     useEffect(() => {
@@ -40,7 +43,31 @@ const DetailQuiz = (props) => {
 
     return (
         <div className="detail-quiz-container">
-            Detail Quiz
+            <div className="left-content">
+                <div className="title">
+                    {/* {location.state.quizTitle} */}
+                    Quiz {quizId} : Không đọc đề cũng làm được (level easy)
+                </div>
+                <hr />
+                <div className="q-body">
+                    <img />
+                </div>
+                <div className="q-content">
+                    <div className="question">Question 1: How are you doing</div>
+                    <div className="answer">
+                        <div className="a-child">A. asdas</div>
+                        <div className="a-child">B. asdas</div>
+                        <div className="a-child">C. dasdsaa</div>
+                    </div>
+                </div>
+                <div className="footer">
+                    <button className="btn btn-secondary">Prev</button>
+                    <button className="btn btn-primary ">Next</button>
+                </div>
+            </div>
+            <div className="right-content">
+                count down
+            </div>
         </div>
     )
 }
