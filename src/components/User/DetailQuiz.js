@@ -31,6 +31,7 @@ const DetailQuiz = (props) => {
                         questionDescription = item.description
                         image = item.image
                     }
+                    item.answers.isSelected = false
                     answers.push(item.answers)
                     console.log('item answer: ', item.answers)
                 })
@@ -43,7 +44,7 @@ const DetailQuiz = (props) => {
             }).value()
             setDataQuiz(data)
 
-            console.log("check data quiz: ", dataQuiz)
+            console.log("check data quiz: ", data)
         }
     }
 
@@ -60,6 +61,29 @@ const DetailQuiz = (props) => {
         setIndex(index - 1)
     }
 
+    const handleCheckboxFromParent = (answerId, questionId) => {
+        let dataQuizClone = _.cloneDeep(dataQuiz)
+        let question = dataQuizClone.find(item => +item.questionId === +questionId)
+        if (question && question.answers) {
+
+            console.log("check question: ", question)
+            let b = question.answers.map(item => {
+                if (+item.id === +answerId) {
+                    item.isSelected = !item.isSelected
+                }
+                return item
+            })
+            // console.log("check b: ", b)
+            question.answers = b
+        }
+        let index = dataQuizClone.findIndex(item => +item.questionId === +questionId)
+        if (index > -1) {
+            dataQuizClone[index] = question
+            setDataQuiz(dataQuizClone)
+        }
+
+    }
+
     return (
         <div className="detail-quiz-container">
             <div className="left-content">
@@ -74,11 +98,13 @@ const DetailQuiz = (props) => {
                     <Question
                         data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[index] : []}
                         index={index}
+                        handleCheckboxFromParent={handleCheckboxFromParent}
                     />
                 </div>
                 <div className="footer">
                     <button className="btn btn-secondary" onClick={() => { handlePrev() }}>Prev</button>
                     <button className="btn btn-primary " onClick={() => handleNext()}>Next</button>
+                    <button className="btn btn-warning " onClick={() => handleNext()}>Finish</button>
                 </div>
             </div>
             <div className="right-content">
