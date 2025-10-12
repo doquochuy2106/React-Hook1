@@ -1,9 +1,10 @@
 import { useParams, useLocation } from "react-router-dom"
-import { getQuestionById } from "../../services/apiServices"
+import { getQuestionById, postSubmitQuizz } from "../../services/apiServices"
 import { useEffect, useState } from "react"
 import _ from "lodash"
 import "./DetailQuiz.scss"
 import Question from "./Question"
+import ModalResult from "./ModalResult"
 
 const DetailQuiz = (props) => {
     const params = useParams()
@@ -13,6 +14,8 @@ const DetailQuiz = (props) => {
 
     const [dataQuiz, setDataQuiz] = useState([])
     const [index, setIndex] = useState(0)
+    const [isShowModalResult, setIsShowModalResult] = useState(false)
+    const [dataModalResult, setDataModalResult] = useState({})
 
     useEffect(() => {
         fetchQuestionById()
@@ -82,7 +85,7 @@ const DetailQuiz = (props) => {
 
     }
 
-    const handleFinishQuizz = () => {
+    const handleFinishQuizz = async () => {
         console.log("chek data boefore: ", dataQuiz)
         let payload = {
             quizId: +quizId,
@@ -109,6 +112,20 @@ const DetailQuiz = (props) => {
 
             payload.answers = answers
             console.log("final payload: ", payload)
+
+            let res = await postSubmitQuizz(payload)
+            console.log("check res: ", res)
+            if (res && res.EC === 0) {
+                setDataModalResult({
+                    countCorrect: res.DT.countCorrect,
+                    countTotal: res.DT.countTotal,
+                    quizData: res.DT.quizData
+                })
+                setIsShowModalResult(true)
+            }
+            else {
+                alert("Wrong something ... ")
+            }
         }
     }
 
@@ -138,6 +155,11 @@ const DetailQuiz = (props) => {
             <div className="right-content">
                 count down
             </div>
+            <ModalResult
+                show={isShowModalResult}
+                setShow={setIsShowModalResult}
+                dataModalResult={dataModalResult}
+            />
         </div>
     )
 }
