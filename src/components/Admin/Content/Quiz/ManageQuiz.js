@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./ManageQuiz.scss"
 import Select from "react-select"
+import { postCreateNewQuizz } from "../../../../services/apiServices";
+import { toast } from "react-toastify";
 
 
 const options = [
@@ -11,11 +13,27 @@ const options = [
 const ManageQuizz = (props) => {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
-    const [type, setType] = useState('EASY')
+    const [type, setType] = useState('')
     const [image, setImage] = useState(null)
 
     const handleChangeFile = (event) => {
+        if (event.target && event.target.files && event.target.files[0]) {
+            setImage(event.target.files[0])
+        }
+    }
 
+    const handleSubmitQuizz = async () => {
+        let res = await postCreateNewQuizz(description, name, type.value, image)
+        console.log("check api: ", res)
+        if (res && res.EC === 0) {
+            toast.success(res.EM)
+            setDescription('')
+            setName('')
+            setImage(null)
+        }
+        else {
+            toast.error(res.EM)
+        }
     }
 
     return (
@@ -50,6 +68,8 @@ const ManageQuizz = (props) => {
                     <div className="my-3">
                         <Select
                             value={type}
+                            defaultValue={type}
+                            onChange={setType}
                             options={options}
                             placeholder={"Quizz type..."}
                         />
@@ -61,6 +81,9 @@ const ManageQuizz = (props) => {
                             className="form-control"
                             onChange={(event) => handleChangeFile(event)}
                         />
+                    </div>
+                    <div className="mt-3">
+                        <button className="btn btn-warning" onClick={() => { handleSubmitQuizz() }}>Save</button>
                     </div>
                 </fieldset>
             </div>

@@ -1,3 +1,4 @@
+import { type } from "@testing-library/user-event/dist/type";
 import axios from "../utils/axiosCustomize";
 
 const postCreateNewUser = (email, password, username, role, image) => {
@@ -55,4 +56,18 @@ const postSubmitQuizz = (data) => {
     return axios.post('/api/v1/quiz-submit', { ...data })
 }
 
-export { postCreateNewUser, getAllUsers, putUpdateUsers, deleteUser, getUserWithPaginate, postLogin, postRegister, getQuizbyUser, getQuestionById, postSubmitQuizz }
+const postCreateNewQuizz = (description, name, type, image) => {
+    const data = new FormData();
+    data.append('description', description)
+    data.append('name', name);
+    data.append('difficulty', type);
+    data.append('quizImage', image);
+
+    return axios.post('/api/v1/quiz', data)
+
+}
+
+export {
+    postCreateNewUser, getAllUsers, putUpdateUsers, deleteUser, getUserWithPaginate, postLogin, postRegister, getQuizbyUser, getQuestionById, postSubmitQuizz,
+    postCreateNewQuizz
+}
