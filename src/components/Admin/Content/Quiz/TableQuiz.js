@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react"
 import { getAllQuizForAdmin } from "../../../../services/apiServices"
+import ModalDeleteQuiz from "./ModalDeleteQuiz"
+import ModalUpdateQuiz from "./ModalUpdateQuiz"
 
 const TableQuiz = (props) => {
 
     const [listQuiz, setListQuiz] = useState([])
+    const [showModalDelete, setShowModalDelete] = useState(false)
+    const [dataDeleteQuiz, setDataDeleteQuiz] = useState({})
+    const [showModalUpdate, setShowModalUpdate] = useState(false)
+    const [dataUpdateQuiz, setDataUpdateQuiz] = useState({})
 
     useEffect(() => {
         getAllQuiz()
@@ -14,6 +20,21 @@ const TableQuiz = (props) => {
         if (res && res.EC === 0) {
             setListQuiz(res.DT)
         }
+    }
+
+    const handleOpenModalDelete = (quiz) => {
+        console.log("check quiz: ", quiz)
+        setShowModalDelete(true)
+        setDataDeleteQuiz(quiz)
+    }
+
+    const handleOpenModalUpdateQuiz = (quizUpdate) => {
+        setShowModalUpdate(true)
+        setDataUpdateQuiz(quizUpdate)
+    }
+
+    const resetUpdateData = () => {
+        setDataUpdateQuiz({})
     }
 
     return (
@@ -40,8 +61,8 @@ const TableQuiz = (props) => {
                                     <td>{item.description}</td>
                                     <td>{item.difficulty}</td>
                                     <td style={{ display: "flex", gap: "15px" }}>
-                                        <button className="btn btn-warning">Edit</button>
-                                        <button className="btn btn-danger">Delete</button>
+                                        <button className="btn btn-warning" onClick={() => { handleOpenModalUpdateQuiz(item) }}>Edit</button>
+                                        <button className="btn btn-danger" onClick={() => { handleOpenModalDelete(item) }}>Delete</button>
                                     </td>
                                 </tr>
                             )
@@ -52,6 +73,20 @@ const TableQuiz = (props) => {
 
                 </tbody>
             </table>
+            <ModalDeleteQuiz
+                showModalDelete={showModalDelete}
+                setShowModalDelete={setShowModalDelete}
+                dataDeleteQuiz={dataDeleteQuiz}
+                getAllQuiz={getAllQuiz}
+            />
+
+            <ModalUpdateQuiz
+                showModalUpdate={showModalUpdate}
+                setShowModalUpdate={setShowModalUpdate}
+                dataUpdateQuiz={dataUpdateQuiz}
+                getAllQuiz={getAllQuiz}
+                resetUpdateData={resetUpdateData}
+            />
         </>
     )
 }
