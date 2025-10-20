@@ -28,13 +28,15 @@ const Question = (props) => {
                     data.answers.map((item, index) => {
                         return (
                             <div key={index} className="a-child">
-                                <input className="form-check-input" type="checkbox"
-                                    onChange={(event) => { handleCheckbox(event, item.id, data.questionId) }}
-                                    checked={item.isSelected}
-                                />
-                                <label className="form-check-label" >
-                                    {item.description}
-                                </label>
+                                <div className="form-check-input">
+                                    <input className="form-check-input" type="checkbox"
+                                        onChange={(event) => { handleCheckbox(event, item.id, data.questionId) }}
+                                        checked={item.isSelected}
+                                    />
+                                    <label className="form-check-label" >
+                                        {item.description}
+                                    </label>
+                                </div>
                             </div>
                         )
                     })
